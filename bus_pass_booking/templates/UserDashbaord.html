@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern User Dashboard</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+:root {
+    --primary: #2563eb;
+    --accent: #00d2ff;
+    /* Glass Effect Colors */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --text-main: #1e3a8a;
+    --text-muted: #64748b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ===============================
+   MATCHING BACKGROUND
+================================ */
+body {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===============================
+   CENTER CONTAINER
+================================ */
+.My-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* This pushes the card slightly down so it's not hugging the 130px navbar */
+    margin-top: 20px;
+}
+
+/* ===============================
+   DASHBOARD CARD (MATCHING GLASS)
+================================ */
+.dashboard {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 60px;
+    border-radius: 40px;
+    border: 1px solid var(--glass-border);
+    /* Soft shadow to match the light theme */
+    box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 850px;
+    animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===============================
+   HEADING & TEXT
+================================ */
+.dashboard h1 {
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Icon matching the blue navbar */
+.dashboard h1 i {
+    color: var(--primary);
+    filter: drop-shadow(0 4px 10px rgba(37, 99, 235, 0.2));
+}
+
+.welcome {
+    color: var(--text-muted);
+    font-size: 18px;
+    margin-bottom: 45px;
+}
+
+.welcome strong {
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.08);
+    padding: 4px 12px;
+    border-radius: 8px;
+}
+
+/* ===============================
+   BUTTON GRID
+================================ */
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.dashboard a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 40px 25px;
+    text-decoration: none;
+    background: white;
+    border-radius: 30px;
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 19px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(37, 99, 235, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+/* Icon Box Styling */
+.dashboard a i {
+    font-size: 32px;
+    width: 65px;
+    height: 65px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    color: var(--primary);
+    transition: 0.3s;
+}
+
+/* Hover Effects - Blue Theme */
+.dashboard a:hover {
+    transform: translateY(-10px);
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 20px 30px rgba(37, 99, 235, 0.2);
+}
+
+.dashboard a:hover i {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: scale(1.1);
+}
+
+.dashboard a p {
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-top: -5px;
+}
+
+.dashboard a:hover p {
+    color: #dbeafe;
+}
+
+/* Matching Cyan Badge */
+.badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #06b6d4;
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(6, 182, 212, 0.3);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media(max-width:700px){
+    .dashboard { padding: 40px 25px; }
+    .button-group { grid-template-columns: 1fr; }
+    .dashboard h1 { font-size: 34px; }
+}
+</style>
+</head>
+
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="My-box">
+    <div class="dashboard">
+
+        <h1><i class="fa-solid fa-rocket"></i> Dashboard</h1>
+
+        <div class="welcome">
+            Hello, <strong>{{ UserName }}</strong> 👋 Ready for your journey?
+        </div>
+
+        <div class="button-group">
+
+            <a href="/SearchAllRoutes">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Search All Routes</span>
+                <p>Find live bus timings & schedules</p>
+            </a>
+
+            <a href="/UsersPassApplications">
+                <span class="badge">Active</span>
+                <i class="fa-solid fa-ticket-simple"></i>
+                <span>My Bus Pass</span>
+                <p>Renew or view your digital pass</p>
+            </a>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | Smart Bus Pass</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+/* BODY BACKGROUND */
+body{
+
+}
+
+/* WRAPPER */
+.main-wrapper{
+  min-height:90vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* CARD CONTAINER */
+.Mycontainer{
+  width:100%;
+  max-width:1000px;
+  min-height:550px;
+  display:flex;
+  border-radius:20px;
+  overflow:hidden;
+  background:white;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  margin-top:120px;
+}
+
+/* ===== LEFT ADMIN PANEL ===== */
+.welcome-box{
+  flex:1;
+  background:linear-gradient(145deg,#0f172a,#1e3a8a,#2563eb);
+  color:white;
+  padding:80px 60px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  clip-path: polygon(0 0, 92% 0, 78% 100%, 0% 100%);
+}
+
+.welcome-box h1{
+  font-size:40px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.welcome-box span{
+  font-size:18px;
+  opacity:0.9;
+  letter-spacing:1px;
+}
+
+.welcome-box p{
+  margin-top:20px;
+  font-size:15px;
+  line-height:1.6;
+  opacity:0.85;
+  max-width:340px;
+}
+
+/* ===== RIGHT LOGIN PANEL ===== */
+.login-box{
+  flex:1;
+  padding:80px 70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:#f8fafc;
+}
+
+.login-box h2{
+  font-size:30px;
+  color:#0f172a;
+  margin-bottom:35px;
+  font-weight:700;
+}
+
+/* INPUT FIELD */
+.input-box{
+  position:relative;
+  margin-bottom:30px;
+}
+
+.input-box input{
+  width:100%;
+  padding:14px 45px 14px 15px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  outline:none;
+  font-size:14px;
+  transition:0.3s;
+  background:white;
+}
+
+.input-box input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 12px rgba(37,99,235,0.25);
+}
+
+.input-box label{
+  position:absolute;
+  left:15px;
+  top:14px;
+  color:#64748b;
+  transition:0.3s;
+  pointer-events:none;
+  background:white;
+  padding:0 5px;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label{
+  top:-8px;
+  font-size:12px;
+  color:#2563eb;
+}
+
+.input-box i{
+  position:absolute;
+  right:15px;
+  top:16px;
+  color:#2563eb;
+  cursor:pointer;
+}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(90deg,#1e3a8a,#2563eb);
+  border:none;
+  border-radius:30px;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+  letter-spacing:1px;
+  font-weight:600;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 35px rgba(30,58,138,0.4);
+}
+
+/* FOOTER */
+.footer-text{
+  margin-top:20px;
+  font-size:13px;
+  color:#475569;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .Mycontainer{
+    flex-direction:column;
+  }
+
+  .welcome-box{
+    clip-path:none;
+    text-align:center;
+    padding:50px 30px;
+  }
+
+  .login-box{
+    padding:50px 30px;
+  }
+}
+
+@media(max-width:500px){
+  .welcome-box h1{
+    font-size:28px;
+  }
+
+  .login-box h2{
+    font-size:22px;
+  }
+}
+  #error-msg{
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 21px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+/* Show only if there is error text */
+#error-msg:not(:empty){
+  display: block;
+}
+</style>
+  <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/scrollreveal"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+</head>
+<body>
+ {% include 'Navbar.html' %}
+<div class="main-wrapper">
+<div class="Mycontainer">
+
+  <!-- LEFT BLUE PANEL -->
+  <div class="welcome-box">
+    <h1>ADMIN PANEL</h1>
+    <span>Smart Bus Pass Management System</span>
+    <p>
+      Authorized administrators can securely manage bus pass approvals,
+      user records, payment verification and generate system reports.
+    </p>
+  </div>
+
+  <!-- RIGHT LOGIN PANEL -->
+  <div class="login-box">
+    <h2>Admin Login</h2>
+<form method="post" action="/AdminLogIn">
+    <div class="input-box">
+      <input type="text" required name="email">
+      <label>Admin Username</label>
+      <i class="fa fa-user"></i>
+    </div>
+
+    <div class="input-box">
+      <input type="password" id="password" name="password" required>
+      <label>Password</label>
+      <i class="fa fa-eye" onclick="togglePassword()"></i>
+    </div>
+
+    <button class="btn">LOGIN</button>
+  <p id="error-msg">{{error}}</p>
+    <div class="footer-text">
+      © 2026 Smart Bus Pass System
+    </div>
+
+</form>
+</div>
+</div>
+
+<script>
+function togglePassword(){
+  const password = document.getElementById("password");
+  if(password.type === "password"){
+    password.type = "text";
+  } else {
+    password.type = "password";
+  }
+}
+</script>
+
+</body>
+</html>

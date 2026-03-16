@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+</head>
+<body>
+{% if userlist %}
+
+<h4 class="m-5 text-center w-75">User List Report</h4>
+
+<table class="table table-bordered table-hover w-75 m-5">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>User_type</th>
+            <th>Date</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in userlist %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+</body>
+</html>

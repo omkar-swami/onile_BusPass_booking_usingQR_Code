@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Pass Dynamic Report</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,#eef2f3,#dfe9f3);
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 20px 20px 0 0;
+            padding: 15px;
+        }
+
+        .form-select {
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .form-select:focus {
+            box-shadow: 0 0 10px rgba(78,115,223,0.4);
+            border-color: #4e73df;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg,#1cc88a,#4e73df);
+        }
+
+        table {
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #343a40;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: 0.3s;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= FILTER CARD ================= -->
+    <div class="card p-4 mb-5">
+        <div class="card-header text-center mb-4">
+            Bus Pass Dynamic Report
+        </div>
+
+        <form method="post" action="/documentDetailsDynamicReport">
+            <div class="row g-4 justify-content-center align-items-end">
+
+                <!-- Pass Type -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Select doucument master Id
+                    </label>
+                    <select name="document_id" class="form-select shadow-sm">
+                        <option value="0">-- Select Pass Type --</option>
+                        {% for row in documentsMasterlist %}
+                        <option value="{{row[0]}}">{{row[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Application -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Select document type
+                    </label>
+                    <select name="document_type_id" class="form-select shadow-sm">
+                        <option value="0">-- Select Application --</option>
+                        {% for row in document_typeslist %}
+                        <option value="{{row[0]}}">{{row[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Button -->
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-custom btn-lg text-white shadow">
+                        Show
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+
+    <!-- ================= REPORT TABLE ================= -->
+    {% if documentDetailslist %}
+    <div class="card">
+        <div class="card-header text-center">
+            Bus Pass Report Result
+        </div>
+
+        <div class="table-responsive p-4">
+            <table class="table table-hover text-center align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>document Details Id</th>
+                        <th>document Id</th>
+                        <th>document type </th>
+                        <th>photo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in documentDetailslist %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

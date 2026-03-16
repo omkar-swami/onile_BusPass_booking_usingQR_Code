@@ -1,0 +1,81 @@
+ /* =========================
+   CUSTOM NAVBAR DESIGN
+========================= */
+
+.custom-navbar {
+  background: linear-gradient(90deg, #002b5b, #004aad, #2563eb);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  padding: 12px 0;
+}
+
+/* Logo Animation */
+.logo-img {
+
+  transition: 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+}
+
+/* Nav Links */
+.custom-link {
+  color: #ffffff !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+/* Animated Underline */
+.custom-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 4px;
+  background: #ffd700;
+  transition: 0.3s ease;
+}
+
+.custom-link:hover::after {
+  width: 100%;
+}
+
+.custom-link:hover {
+  color: #ffd700 !important;
+}
+
+/* Admin Button */
+.admin-btn {
+  background: #ffd700;
+  color: #002b5b !important;
+  font-weight: 700;
+  border-radius: 30px;
+  padding: 8px 22px;
+  transition: 0.3s ease;
+}
+
+.admin-btn:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Mobile Menu Styling */
+@media (max-width: 991px) {
+
+  .navbar-collapse {
+    background: rgba(0, 43, 91, 0.97);
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  .custom-link {
+    margin: 10px 0;
+  }
+}

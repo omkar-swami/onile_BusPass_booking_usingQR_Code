@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Date Wise Report</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,#eef2f3,#dfe9f3);
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 20px 20px 0 0;
+            padding: 15px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(78,115,223,0.4);
+            border-color: #4e73df;
+        }
+
+        .btn-issue {
+            background: linear-gradient(90deg,#1cc88a,#17a673);
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-expiry {
+            background: linear-gradient(90deg,#f6c23e,#e74a3b);
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-issue:hover,
+        .btn-expiry:hover {
+            transform: scale(1.05);
+        }
+
+        table {
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #343a40;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= FILTER CARD ================= -->
+    <div class="card p-4 mb-5">
+        <div class="card-header text-center mb-4">
+            User Date Wise Report
+        </div>
+
+        <form action="/BusPassDateWisereports" method="post">
+            <div class="row g-4 justify-content-center align-items-end">
+
+                <!-- From Date -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Select From Date</label>
+                    <input type="date" name="FDate" class="form-control shadow-sm" required>
+                </div>
+
+                <!-- To Date -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Select To Date</label>
+                    <input type="date" name="TDate" class="form-control shadow-sm" required>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold d-block text-center">Generate Report</label>
+                    <div class="d-flex gap-3">
+                        <button type="submit"
+                                class="btn btn-issue btn-lg shadow w-50"
+                                name="btn"
+                                value="issue">
+                            Issue Report
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-expiry btn-lg shadow w-50"
+                                name="btn"
+                                value="expiry">
+                            Expiry Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- ================= REPORT TABLE ================= -->
+    {% if buspasslist %}
+    <div class="card">
+        <div class="card-header text-center">
+            Bus Pass Date Wise Report
+        </div>
+
+        <div class="table-responsive p-4">
+            <table class="table table-hover text-center align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Pass ID</th>
+                        <th>Pass Type</th>
+                        <th>User Name</th>
+                        <th>Base</th>
+                        <th>Discount</th>
+                        <th>Final</th>
+                        <th>Issue</th>
+                        <th>Expiry</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in buspasslist %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                        <td>{{ row[6] }}</td>
+                        <td>{{ row[7] }}</td>
+                        <td>{{ row[8] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

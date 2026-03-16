@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Route Management | Smart Bus Pass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    :root {
+        --brand-blue: #004aad;
+        --dark-navy: #002e6e;
+        --accent-gold: #ffcc00;
+        --bg-soft: #f8fafc;
+        --success-green: #0ca678;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-soft);
+        color: #1e293b;
+        padding-top: 140px;
+    }
+
+    /* ===== Search Section (Glassmorphism & Fix) ===== */
+    .search-wrapper {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 74, 173, 0.1);
+        border: 1px solid rgba(0, 74, 173, 0.05);
+        margin-bottom: 60px;
+        position: relative;
+    }
+
+    .form-label {
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: var(--brand-blue);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .form-select {
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 14px !important;
+        height: 55px !important;
+        font-size: 0.95rem !important;
+        transition: 0.3s !important;
+    }
+
+    .form-select:focus {
+        border-color: var(--brand-blue) !important;
+        box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.1) !important;
+    }
+
+    /* Fixed Search Button CSS */
+    .btn-search {
+        background: var(--brand-blue) !important;
+        background: linear-gradient(135deg, var(--brand-blue), var(--dark-navy)) !important;
+        border: none !important;
+        height: 55px !important;
+        border-radius: 14px !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        transition: all 0.3s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 10px 20px rgba(0, 74, 173, 0.2) !important;
+    }
+
+    .btn-search:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 15px 25px rgba(0, 74, 173, 0.3) !important;
+        filter: brightness(1.1);
+    }
+
+    /* ===== Route Card (Ticket Style) ===== */
+    .route-card {
+        border: none;
+        border-radius: 28px;
+        background: #ffffff;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #f1f5f9;
+    }
+
+    .route-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 30px 60px rgba(0, 74, 173, 0.15);
+    }
+
+    .card-accent {
+        height: 8px;
+        background: linear-gradient(90deg, var(--brand-blue), var(--accent-gold));
+    }
+
+    .status-badge {
+        background: #ecfdf5;
+        color: var(--success-green);
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 6px 14px;
+        border-radius: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .route-display {
+        display: flex;
+        align-items: center;
+        margin: 30px 0;
+        background: #f1f5f9;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .city-name {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--dark-navy);
+        margin: 0;
+        flex: 1;
+    }
+
+    .bus-icon-middle {
+        width: 40px;
+        height: 40px;
+        background: var(--brand-blue);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin: 0 15px;
+        box-shadow: 0 4px 10px rgba(0, 74, 173, 0.2);
+    }
+
+    /* Ticket Perforation Effect */
+    .ticket-pricing {
+        background: #fffbeb;
+        border: 2px dashed #fcd34d;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .pass-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #b45309;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .pass-price {
+        font-size: 1.75rem;
+        font-weight: 900;
+        color: #78350f;
+    }
+
+    .btn-action {
+        background: var(--brand-blue);
+        color: white !important;
+        padding: 16px;
+        border-radius: 16px;
+        font-weight: 700;
+        width: 100%;
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s;
+        border: none;
+    }
+
+    .btn-action:hover {
+        background: var(--dark-navy);
+        letter-spacing: 1px;
+    }
+
+    .section-header {
+        font-weight: 800;
+        font-size: 1.75rem;
+        color: var(--dark-navy);
+        margin-bottom: 40px;
+    }
+</style>
+</head>
+
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="container">
+
+    <div class="search-wrapper">
+        <form method="post" action="/SearchAllRoutes">
+            <div class="row g-4 align-items-end">
+                <div class="col-lg-4">
+                    <label class="form-label"><i class="fa-solid fa-circle-dot me-2"></i>Starting Point</label>
+                    <select name="source" class="form-select shadow-sm">
+                        <option value="None">Where are you now?</option>
+                        {% for row in route_sourcelist %}
+                        <option value="{{row[0]}}">{{row[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <label class="form-label"><i class="fa-solid fa-location-dot me-2"></i>Destination</label>
+                    <select name="destination" class="form-select shadow-sm">
+                        <option value="None">Where to go?</option>
+                        {% for row in route_destinationlist %}
+                        <option value="{{row[0]}}">{{row[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <button type="submit" class="btn btn-search w-100">
+                        <i class="fa-solid fa-bus me-2"></i> SEARCH ROUTES
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if routelist %}
+    <h3 class="section-header">Available Schedules</h3>
+
+    <div class="row g-4 mb-5">
+        {% for row in routelist %}
+        <div class="col-xl-4 col-md-6">
+            <div class="card route-card">
+                <div class="card-accent"></div>
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge">ONLINE</span>
+                        <span class="small text-muted fw-bold">ID: {{ row[0] }}</span>
+                    </div>
+
+                    <div class="route-display">
+                        <div class="city-name">{{ row[1] }}</div>
+                        <div class="bus-icon-middle">
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </div>
+                        <div class="city-name text-end">{{ row[2] }}</div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-4">
+                        <div>
+                            <small class="text-muted d-block fw-bold small">DISTANCE</small>
+                            <span class="fw-bold text-dark">{{ row[3] }} Km</span>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted d-block fw-bold small">FARE RATE</small>
+                            <span class="fw-bold text-dark">₹{{ row[4] }}/km</span>
+                        </div>
+                    </div>
+
+                    <div class="ticket-pricing">
+                        <span class="pass-label">Estimated Monthly Pass</span>
+                        <div class="pass-price">₹{{ ((row[3] * row[4])*30)|int }}</div>
+                    </div>
+
+                    <a href="/SearchDetails?route_id={{row[0]}}" class="btn-action shadow-sm">
+                        GET PASS NOW <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="text-center py-5">
+        <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" width="120" class="mb-4 opacity-50" alt="No data">
+        <h4 class="fw-bold text-muted">No Routes Found</h4>
+        <p class="text-muted">Try changing your origin or destination.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

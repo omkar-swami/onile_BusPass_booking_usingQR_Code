@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bus Pass Invoice</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:'Segoe UI',Arial,sans-serif;
+}
+
+body{
+background:#f4f6fb;
+padding:40px;
+color:#222;
+}
+
+/* MAIN CONTAINER */
+
+.invoice{
+width:820px;
+margin:auto;
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+}
+
+/* HEADER */
+
+.header{
+background:#1e293b;
+color:white;
+padding:25px 35px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo-text h2{
+font-size:22px;
+font-weight:700;
+}
+
+.logo-text p{
+font-size:13px;
+opacity:.8;
+margin-top:4px;
+}
+
+.invoice-title{
+font-size:28px;
+font-weight:800;
+color:#ff9f1c;
+}
+
+/* TOP INFO */
+
+.top-info{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+padding:30px;
+}
+
+/* CARDS */
+
+.info-card{
+background:#ffffff;
+border:1px solid #e4e6eb;
+border-radius:10px;
+overflow:hidden;
+}
+
+.card-header{
+background:#334155;
+color:white;
+padding:12px 16px;
+font-size:14px;
+font-weight:700;
+}
+
+.card-body{
+padding:14px 16px;
+font-size:14px;
+}
+
+.info-row{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px solid #f0f0f0;
+}
+
+.info-row:last-child{
+border-bottom:none;
+}
+
+.info-row span:first-child{
+color:#555;
+font-weight:500;
+}
+
+.info-row span:last-child{
+color:#111;
+font-weight:700;
+}
+
+/* TABLE */
+
+.table-section{
+padding:0 30px 20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#1e293b;
+color:white;
+padding:12px;
+font-size:14px;
+text-align:center;
+}
+
+td{
+padding:11px;
+border-bottom:1px solid #e5e7eb;
+font-size:14px;
+text-align:center;
+font-weight:500;
+}
+
+tr:nth-child(even){
+background:#fafafa;
+}
+
+/* BOTTOM */
+
+.bottom{
+display:flex;
+justify-content:space-between;
+padding:20px 30px 30px;
+}
+
+/* PASS BOX */
+
+.small-box{
+width:35%;
+background:#f8fafc;
+border:1px solid #e5e7eb;
+border-radius:10px;
+padding:15px;
+font-size:14px;
+}
+
+.small-box h4{
+margin-bottom:8px;
+color:#1e293b;
+font-size:15px;
+}
+
+/* TOTAL */
+
+.total{
+width:250px;
+}
+
+.total table{
+width:100%;
+}
+
+.total td{
+border:none;
+padding:8px 0;
+font-size:15px;
+}
+
+.final{
+background:#ff9f1c;
+color:white;
+font-weight:800;
+}
+
+.final td{
+padding:10px;
+}
+
+/* FOOTER */
+
+.footer{
+display:flex;
+justify-content:space-between;
+padding:18px 30px;
+border-top:1px solid #eee;
+font-size:13px;
+color:#555;
+}
+
+/* BUTTONS */
+.buttons{
+text-align:center;
+padding:30px;
+}
+
+.buttons button{
+padding:12px 28px;
+border:none;
+border-radius:8px;
+background:linear-gradient(135deg,#1e3a8a,#2563eb);
+color:white;
+font-size:15px;
+cursor:pointer;
+margin:8px;
+font-weight:600;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+transition:all 0.3s ease;
+}
+
+/* link inside button */
+.buttons button a{
+text-decoration:none;
+color:white;
+display:block;
+}
+
+/* hover effect */
+.buttons button:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 18px rgba(0,0,0,0.25);
+background:linear-gradient(135deg,#f97316,#fb923c);
+}
+/* PRINT STYLE */
+
+@media print{
+
+body{
+background:white;
+padding:0;
+}
+
+.buttons{
+display:none;
+}
+
+/* IMPORTANT FOR PRINT COLORS */
+
+*{
+-webkit-print-color-adjust:exact;
+print-color-adjust:exact;
+}
+
+/* FORCE COLORS */
+
+.header{
+background:#1e293b !important;
+color:white !important;
+}
+
+th{
+background:#1e293b !important;
+color:white !important;
+}
+
+.final{
+background:#ff9f1c !important;
+color:white !important;
+}
+
+.invoice{
+box-shadow:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="invoice">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="logo-text">
+<h2>SMART BUS PASS</h2>
+<p>Transport Management System</p>
+</div>
+
+<div class="invoice-title">
+INVOICE
+</div>
+
+</div>
+
+{% for row in inoive_data %}
+
+<!-- TOP INFO -->
+
+<div class="top-info">
+
+<div class="info-card">
+
+<div class="card-header">
+Passenger Information
+</div>
+
+<div class="card-body">
+
+{% for user in user_data %}
+
+<div class="info-row">
+<span>Name</span>
+<span>{{user[1]}}</span>
+</div>
+
+<div class="info-row">
+<span>Email</span>
+<span>{{user[2]}}</span>
+</div>
+
+<div class="info-row">
+<span>Contact</span>
+<span>{{user[3]}}</span>
+</div>
+
+<div class="info-row">
+<span>Address</span>
+<span>{{user[6]}}</span>
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div class="card-header">
+Invoice Information
+</div>
+
+<div class="card-body">
+
+<div class="info-row">
+<span>Invoice ID</span>
+<span>{{row[0]}}</span>
+</div>
+
+<div class="info-row">
+<span>Application ID</span>
+<span>{{row[2]}}</span>
+</div>
+
+<div class="info-row">
+<span>Pass Type</span>
+<span>{{row[1]}}</span>
+</div>
+
+<div class="info-row">
+<span>Payment Date</span>
+<span>{{row[11]}}</span>
+</div>
+
+<div class="info-row">
+<span>Route</span>
+<span>{{row[9]}} → {{row[10]}}</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-section">
+
+<table>
+
+<tr>
+<th>SL</th>
+<th>Description</th>
+<th>Price</th>
+<th>Total</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Base Amount</td>
+<td>₹ {{row[4]}}</td>
+<td>₹ {{row[4]}}</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Discount</td>
+<td>- ₹ {{row[5]}}</td>
+<td>- ₹ {{row[5]}}</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- BOTTOM -->
+
+<div class="bottom">
+
+<div class="small-box">
+<h4>Pass Validity</h4>
+<p><b>Issue:</b> {{row[7]}}</p>
+<p><b>Expiry:</b> {{row[8]}}</p>
+</div>
+
+<div class="total">
+
+<table>
+
+<tr>
+<td>Subtotal</td>
+<td>₹ {{row[4]}}</td>
+</tr>
+
+<tr>
+<td>Discount</td>
+<td>- ₹ {{row[5]}}</td>
+</tr>
+
+<tr class="final">
+<td>Total</td>
+<td>₹ {{row[6]}}</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<div>
+Thanks for using Smart Bus Pass System.
+</div>
+
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="buttons">
+<button onclick="window.print()">Print Invoice</button>
+<button><a href="/UserDashbaord">Dashboard</a></button>
+</div>
+
+</div>
+
+</body>
+</html>

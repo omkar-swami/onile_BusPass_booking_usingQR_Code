@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Data</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:'Segoe UI',Arial,sans-serif;
+}
+
+/* BODY */
+
+body{
+background:linear-gradient(135deg,#eef2ff,#f1f5f9);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:120px;
+}
+
+/* MAIN CONTAINER */
+
+.application-data{
+width:95%;
+max-width:1000px;
+background:white;
+padding:35px;
+border-radius:14px;
+box-shadow:0 15px 35px rgba(0,0,0,0.1);
+border-top:5px solid #2563eb;
+transition:0.3s;
+}
+
+.application-data:hover{
+transform:translateY(-3px);
+box-shadow:0 20px 45px rgba(0,0,0,0.15);
+}
+
+/* HEADER */
+
+h1{
+text-align:center;
+margin-bottom:25px;
+color:#1e3a8a;
+font-size:26px;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+border-radius:10px;
+overflow:hidden;
+}
+
+/* HEADER */
+
+th{
+background:linear-gradient(135deg,#1e3a8a,#2563eb);
+color:white;
+padding:14px;
+font-size:13px;
+letter-spacing:0.5px;
+text-transform:uppercase;
+}
+
+/* CELLS */
+
+td{
+padding:13px;
+text-align:center;
+border-bottom:1px solid #e5e7eb;
+font-size:14px;
+}
+
+/* ROW HOVER */
+
+tr:hover{
+background:#f8fafc;
+}
+
+/* STATUS */
+
+.status{
+padding:6px 14px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+
+.approved{
+background:#dcfce7;
+color:#15803d;
+}
+
+.pending{
+background:#fef3c7;
+color:#b45309;
+}
+
+/* BUTTONS */
+
+.application-data a.btn{
+padding:9px 18px;
+border-radius:6px;
+text-decoration:none;
+font-size:13px;
+font-weight:600;
+display:inline-block;
+transition:0.25s;
+}
+
+/* BLUE BUTTON */
+
+.application-data a.btn-primary{
+background:#2563eb;
+color:white;
+box-shadow:0 4px 10px rgba(37,99,235,0.3);
+}
+
+.application-data a.btn-primary:hover{
+background:#1d4ed8;
+transform:translateY(-2px);
+box-shadow:0 6px 15px rgba(37,99,235,0.4);
+}
+
+/* DISABLED BUTTON */
+
+.application-data a.btn-disabled{
+background:#cbd5f5;
+color:white;
+pointer-events:none;
+cursor:not-allowed;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:768px){
+
+body{
+padding-top:110px;
+}
+
+table, thead, tbody, th, td, tr{
+display:block;
+width:100%;
+}
+
+thead{
+display:none;
+}
+
+tr{
+background:white;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 5px 12px rgba(0,0,0,0.08);
+padding:10px;
+}
+
+td{
+text-align:right;
+padding:10px;
+position:relative;
+}
+
+td::before{
+content:attr(data-label);
+position:absolute;
+left:10px;
+font-weight:bold;
+color:#1e3a8a;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="application-data">
+
+{% if applicationlist %}
+
+<h1>Application Form Data</h1>
+
+<table>
+
+<thead>
+<tr>
+<th>Application ID</th>
+<th>Applicant Name</th>
+<th>Pass Type</th>
+<th>Route</th>
+<th>Application Date</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for row in applicationlist %}
+
+<tr>
+
+<td data-label="Application ID">{{row[0]}}</td>
+<td data-label="Applicant Name">{{row[1]}}</td>
+<td data-label="Pass Type">{{row[2]}}</td>
+<td data-label="Route">{{row[3]}} to {{row[4]}}</td>
+<td data-label="Application Date">{{row[6]}}</td>
+
+<td data-label="Status">
+{% if row[5]=='Approved' %}
+<span class="status approved">Approved</span>
+{% else %}
+<span class="status pending">Pending</span>
+{% endif %}
+</td>
+
+<td data-label="Action">
+{% if row[5]=='Approved' %}
+<a href="/QRcodeGenrator?application_id={{row[0]}}" class="btn btn-primary">Generate QR</a>
+{% else %}
+<a class="btn btn-disabled">Generate QR</a>
+{% endif %}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<h2 style="text-align:center;color:#ef4444;">No Application Data Found</h2>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

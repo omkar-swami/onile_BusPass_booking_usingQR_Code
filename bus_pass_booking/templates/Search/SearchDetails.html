@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Route Pass Details | Smart Bus Pass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    :root {
+        --brand-blue: #004aad;
+        --dark-navy: #002e6e;
+        --accent-gold: #ffcc00;
+        --emerald: #10b981;
+        --soft-bg: #f8fafc;
+        --border-color: #e2e8f0;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--soft-bg);
+        color: #334155;
+        padding-top: 140px;
+    }
+
+    /* ===== Main Container ===== */
+    .main-box {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 74, 173, 0.05);
+        padding: 40px;
+        border: 1px solid var(--border-color);
+        position: relative;
+    }
+
+    /* Professional Top Accent */
+    .main-box::before {
+        content: "";
+        height: 5px;
+        width: 100%;
+        background: linear-gradient(90deg, var(--brand-blue), var(--accent-gold));
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .page-title {
+        font-weight: 800;
+        color: var(--dark-navy);
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    /* ===== Stylish Summary Bar ===== */
+    .route-summary-bar {
+        background-color: #f1f5f9;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 40px;
+        border-left: 4px solid var(--brand-blue);
+    }
+
+    .summary-item label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--brand-blue);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .summary-item span {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--dark-navy);
+    }
+
+    /* ===== Elegant Table Styling ===== */
+    .table-responsive {
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead {
+        background-color: #f8fafc;
+    }
+
+    .table thead th {
+        border-bottom: 2px solid var(--border-color);
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 20px;
+    }
+
+    .table tbody tr {
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f0f7ff !important;
+        border-left: 3px solid var(--brand-blue);
+    }
+
+    .table td {
+        padding: 20px;
+        vertical-align: middle;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Dynamic Pricing Colors */
+    .original-price {
+        color: #94a3b8;
+        font-weight: 500;
+    }
+
+    .discount-val {
+        color: #ef4444;
+        font-weight: 600;
+    }
+
+    .final-val {
+        color: var(--emerald);
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+    .validity-tag {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    /* ===== Premium Apply Button ===== */
+    .btn-apply {
+        background: var(--brand-blue) !important;
+        border: none !important;
+        color: white !important;
+        font-weight: 700 !important;
+        font-size: 0.8rem !important;
+        padding: 10px 20px !important;
+        border-radius: 8px !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 6px rgba(0, 74, 173, 0.15);
+    }
+
+    .btn-apply:hover {
+        background: var(--dark-navy) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 74, 173, 0.25);
+        color: var(--accent-gold) !important; /* Subtle gold text on hover */
+    }
+
+</style>
+</head>
+
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="container mb-5">
+    {% if routedata %}
+    <div class="main-box">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="page-title m-0"><i class="fa-solid fa-bus-simple me-2"></i>Route Pass Selection</h3>
+            <span class="badge bg-light text-muted border px-3 py-2">System Live</span>
+        </div>
+
+        <div class="route-summary-bar">
+            <div class="row text-center">
+                <div class="col-6 col-md-3 border-end">
+                    <div class="summary-item">
+                        <label>From</label>
+                        <span>{{ routedata[0][1] }}</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 border-end">
+                    <div class="summary-item">
+                        <label>To</label>
+                        <span class="text-primary">{{ routedata[0][2] }}</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 border-end">
+                    <div class="summary-item">
+                        <label>Distance</label>
+                        <span>{{ routedata[0][3] }} Km</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="summary-item">
+                        <label>Unit Rate</label>
+                        <span>₹{{ routedata[0][4] }} / Km</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if passDetlist %}
+        <div class="table-responsive">
+            <table class="table align-middle table-hover">
+                <thead>
+                    <tr>
+                        <th>User Type</th>
+                        <th>Pass Category</th>
+                        <th>Base Price</th>
+                        <th>Discount</th>
+                        <th>Final Price</th>
+                        <th>Validity</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in passDetlist %}
+                    {% set original_price = (routedata[0][3] * routedata[0][4]) * row[3] %}
+                    {% set discount_amount = (original_price * row[4]) / 100 %}
+                    {% set final_amount = original_price - discount_amount %}
+                    <tr>
+                        <td><strong class="text-dark">{{ row[1] }}</strong></td>
+                        <td>{{ row[2] }}</td>
+                        <td class="original-price">₹{{ original_price | int }}</td>
+                        <td class="discount-val">- ₹{{ discount_amount | int }} ({{ row[4] }}%)</td>
+                        <td class="final-val">₹{{ final_amount | int }}</td>
+                        <td><span class="validity-tag">{{ row[3] }} Days</span></td>
+                        <td class="text-end">
+                            <a href="/buspassApplication?route_id={{route_id}}&user_type_id={{row[5]}}&pass_type_id={{row[6]}}&original_price={{original_price}}&dis_per={{row[4]}}&discount_amount={{discount_amount}}&final_amount={{final_amount}}" class="btn btn-apply">
+                                Apply <i class="fa-solid fa-arrow-right-long ms-2"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

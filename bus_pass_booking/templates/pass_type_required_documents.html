@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pass Type Required Documents</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ValidationLibrary.js') }}"></script>
+
+    <script>
+        function formValidator() {
+
+            var pass_type = document.getElementById("ddlPassType");
+            var document_type = document.getElementById("ddlDocumentType");
+            var user_type = document.getElementById("ddlUserType");
+
+            if (madeSelection(pass_type, "Please select Pass Type") &&
+                madeSelection(document_type, "Please select Document Type") &&
+                madeSelection(user_type, "Please select User Type")) {
+
+                return true;
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="mb-4">Pass Type Required Documents</h2>
+
+<form method="POST" action="/pass_type_required_documents" class="card p-4 shadow">
+
+    <div class="mb-3">
+        <label>Doc Requirement ID</label>
+        <input type="text" class="form-control w-25"
+               name="doc_req_id"
+               value="{{ doc_req_id }}"
+               readonly>
+    </div>
+
+    <!-- PASS TYPE -->
+    <div class="mb-3">
+        <label>Pass Type</label>
+        <select name="pass_type_id" id="ddlPassType" class="form-control w-50">
+            <option>Please Choose</option>
+            {% for row in pass_typelist %}
+                <option value="{{ row[0] }}"
+                {% if row[0]|string == pass_type_id|string %} selected {% endif %}>
+                    {{ row[1] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- DOCUMENT TYPE -->
+    <div class="mb-3">
+        <label>Document Type</label>
+        <select name="document_type_id" id="ddlDocumentType" class="form-control w-50">
+            <option>Please Choose</option>
+            {% for row in documentlist %}
+                <option value="{{ row[0] }}"
+                {% if row[0]|string == document_type_id|string %} selected {% endif %}>
+                    {{ row[1] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- USER TYPE -->
+    <div class="mb-3">
+        <label>User Type</label>
+        <select name="user_type_id" id="ddlUserType" class="form-control w-50">
+            <option>Please Choose</option>
+            {% for row in usertypelist %}
+                <option value="{{ row[0] }}"
+                {% if row[0]|string == user_type_id|string %} selected {% endif %}>
+                    {{ row[1] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mt-3">
+        <input type="submit" value="Insert" name="btn"
+               class="btn btn-primary"
+               onclick="return formValidator()"
+               {% if is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Update" name="btn"
+               class="btn btn-success"
+               onclick="return formValidator()"
+               {% if not is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Delete" name="btn"
+               class="btn btn-danger"
+               {% if not is_record %} disabled {% endif %}>
+    </div>
+</form>
+
+{% if docreq_list %}
+<hr>
+
+<h4>Mapping List</h4>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Doc Req ID</th>
+            <th>Pass Type ID</th>
+            <th>Document Type ID</th>
+            <th>User Type ID</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in docreq_list %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>
+                <a href="/pass_type_required_documents?doc_req_id={{ row[0] }}&pass_type_id={{ row[1] }}&document_type_id={{ row[2] }}&user_type_id={{ row[3] }}"
+                   class="btn btn-outline-info btn-sm">
+                   Select
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+</body>
+</html>

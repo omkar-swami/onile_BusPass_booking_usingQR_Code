@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</head>
+<body>
+{% if discountlist %}
+<h4>pass Discount List Report</h4>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>User Type</th>
+            <th>Pass Type </th>
+            <th>Discount %</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in discountlist %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }} %</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+</body>
+</html>

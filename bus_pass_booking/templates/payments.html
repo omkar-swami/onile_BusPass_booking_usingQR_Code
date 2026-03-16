@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payments</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ValidationLibrary.js') }}"></script>
+
+    <script>
+        function formValidator() {
+
+            var application = document.getElementById("ddlApplication");
+            var amount = document.getElementById("txtAmount");
+            var date = document.getElementById("txtDate");
+
+            if (madeSelection(application, "Please select Application ID") &&
+                isNumeric(amount, "Please enter valid Amount") &&
+                notEmpty(date, "Please select Payment Date")) {
+
+                return true;
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="mb-4">Payments</h2>
+
+<form method="POST" action="/payments" class="card p-4 shadow">
+
+    <div class="mb-3">
+        <label>Payment ID</label>
+        <input type="text"
+               class="form-control w-25"
+               name="payment_id"
+               value="{{ payment_id }}"
+               readonly>
+    </div>
+
+    <!-- Application Dropdown -->
+    <div class="mb-3">
+        <label>Application ID</label>
+        <select name="application_id" id="ddlApplication" class="form-control w-50">
+            <option>Please Choose</option>
+            {% for row in applicationlist %}
+                <option value="{{ row[0] }}"
+                {% if row[0]|string == application_id|string %} selected {% endif %}>
+                    {{ row[0] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Amount</label>
+        <input type="text"
+               name="amount"
+               id="txtAmount"
+               class="form-control w-50"
+               value="{{ amount }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Payment Date</label>
+        <input type="date"
+               name="payment_date"
+               id="txtDate"
+               class="form-control w-50"
+               value="{{ payment_date }}">
+    </div>
+
+    <div class="mt-3">
+        <input type="submit" value="Insert" name="btn"
+               class="btn btn-primary"
+               onclick="return formValidator()"
+               {% if is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Update" name="btn"
+               class="btn btn-success"
+               onclick="return formValidator()"
+               {% if not is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Delete" name="btn"
+               class="btn btn-danger"
+               {% if not is_record %} disabled {% endif %}>
+    </div>
+</form>
+
+{% if paymentlist %}
+<hr>
+
+<h4>Payments List</h4>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Payment ID</th>
+            <th>Application ID</th>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in paymentlist %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>
+                <a href="/payments?payment_id={{ row[0] }}&application_id={{ row[1] }}&amount={{ row[2] }}&payment_date={{ row[3] }}"
+                   class="btn btn-outline-info btn-sm">
+                   Select
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+</body>
+</html>

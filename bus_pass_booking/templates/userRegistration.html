@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register | Smart Bus Pass</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script src="{{ url_for('static', filename='js/ValidationLibrary.js') }}"></script>
+
+<script>
+
+function formValidator(){
+
+var full_name = document.getElementById("txtFullName");
+var email = document.getElementById("txtEmail");
+var mobile = document.getElementById("txtMobile");
+var usertype = document.getElementById("ddlUserType");
+var address = document.getElementById("txtAddress");
+var password = document.getElementById("txtPassword");
+
+if(
+notEmpty(full_name,"Full Name must be given") &&
+isAlphabet(full_name,"Please enter only letters in Name") &&
+lengthRestriction(full_name,3,30) &&
+
+notEmpty(email,"Email must be given") &&
+emailValidator(email,"Please enter valid Email Address") &&
+
+notEmpty(mobile,"Mobile number required") &&
+isNumeric(mobile,"Mobile must be numeric") &&
+validmobile(mobile) &&
+
+madeSelection(usertype,"Please select Pass Category") &&
+
+notEmpty(address,"Address must be given") &&
+isAlphanumeric(address,"Address must contain letters and numbers only") &&
+lengthRestriction(address,5,100) &&
+
+notEmpty(password,"Password must be given") &&
+isValidPassword(password,"Password must contain Uppercase, Lowercase, Number and Special Character")
+)
+{
+return true;
+}
+
+return false;
+
+}
+
+</script>
+
+<style>
+
+:root{
+--primary:#2563eb;
+--primary-dark:#1e40af;
+--accent:#f97316;
+--bg:#f1f5f9;
+--nav-h:130px;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+body{
+
+background:
+radial-gradient(circle at 10% 10%,rgba(37,99,235,0.15),transparent 40%),
+radial-gradient(circle at 90% 90%,rgba(249,115,22,0.15),transparent 40%),
+var(--bg);
+
+min-height:100vh;
+display:flex;
+flex-direction:column;
+color:#0f172a;
+}
+
+.main-wrapper{
+margin-top:var(--nav-h);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:30px 20px;
+}
+
+.registration-card{
+width:100%;
+max-width:1050px;
+min-height:520px;
+
+background:rgba(255,255,255,0.75);
+backdrop-filter:blur(25px);
+
+border-radius:30px;
+
+box-shadow:
+0 30px 60px rgba(0,0,0,0.12),
+0 8px 20px rgba(0,0,0,0.08);
+
+display:flex;
+overflow:hidden;
+}
+
+.side-panel{
+
+flex:1;
+
+background:linear-gradient(140deg,#2563eb,#1e40af);
+
+padding:45px 40px;
+
+color:white;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.side-panel h1{
+font-size:36px;
+font-weight:800;
+line-height:1.2;
+}
+
+.side-panel p{
+margin-top:15px;
+color:#dbeafe;
+font-size:14px;
+}
+
+.feature-badge{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+background:rgba(255,255,255,0.15);
+
+padding:10px 16px;
+
+border-radius:12px;
+
+margin-top:12px;
+
+font-size:13px;
+}
+
+.feature-badge i{
+color:var(--accent);
+}
+
+.form-panel{
+
+flex:1.4;
+
+background:white;
+
+padding:45px;
+}
+
+.form-header{
+margin-bottom:20px;
+}
+
+.form-header h2{
+font-size:26px;
+font-weight:700;
+}
+
+.form-header span{
+color:#64748b;
+font-size:13px;
+}
+
+.grid-container{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+}
+
+.span-full{
+grid-column:span 2;
+}
+
+.input-wrapper{
+display:flex;
+flex-direction:column;
+gap:5px;
+}
+
+.input-wrapper label{
+font-size:11px;
+font-weight:700;
+color:#475569;
+}
+
+.field-box{
+position:relative;
+}
+
+.field-box i{
+position:absolute;
+left:14px;
+top:50%;
+transform:translateY(-50%);
+color:var(--primary);
+}
+
+.field-box input,
+.field-box select{
+
+width:100%;
+
+padding:12px 12px 12px 42px;
+
+border-radius:12px;
+
+border:1px solid #e2e8f0;
+
+font-size:14px;
+
+background:#f8fafc;
+}
+
+.submit-btn{
+
+margin-top:10px;
+
+width:100%;
+
+padding:13px;
+
+border:none;
+
+border-radius:12px;
+
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+color:white;
+
+font-weight:700;
+
+font-size:14px;
+
+cursor:pointer;
+}
+
+.footer-link{
+margin-top:16px;
+text-align:center;
+font-size:13px;
+color:#64748b;
+}
+
+.footer-link a{
+color:var(--primary);
+font-weight:700;
+text-decoration:none;
+}
+
+@media(max-width:900px){
+
+.registration-card{
+flex-direction:column;
+max-width:600px;
+}
+
+.side-panel{
+display:none;
+}
+
+.grid-container{
+grid-template-columns:1fr;
+}
+
+.span-full{
+grid-column:span 1;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% include 'Navbar.html' %}
+
+<main class="main-wrapper">
+
+<div class="registration-card">
+
+<section class="side-panel">
+
+<div>
+
+<h1>Smart<br>Bus Pass<br>System</h1>
+
+<p>Register once and travel anywhere with your digital pass.</p>
+
+<div class="feature-badge">
+<i class="fa-solid fa-bolt"></i>
+<span>Instant Pass Generation</span>
+</div>
+
+<div class="feature-badge">
+<i class="fa-solid fa-shield-halved"></i>
+<span>Secure QR Verification</span>
+</div>
+
+<div class="feature-badge">
+<i class="fa-solid fa-mobile-screen"></i>
+<span>Contactless Boarding</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="form-panel">
+
+<div class="form-header">
+
+<h2>Create Account</h2>
+<span>Please enter your details</span>
+
+</div>
+
+<form method="POST" action="/userRegistration" onsubmit="return formValidator()">
+
+<input type="hidden" name="user_id" value="{{ user_id }}">
+<input type="hidden" name="created_at" value="{{ created_at }}">
+
+<div class="grid-container">
+
+<div class="input-wrapper">
+
+<label>Full Name</label>
+
+<div class="field-box">
+<i class="fa-solid fa-user"></i>
+<input type="text" id="txtFullName" name="full_name" placeholder="John Doe">
+</div>
+
+</div>
+
+<div class="input-wrapper">
+
+<label>Email Address</label>
+
+<div class="field-box">
+<i class="fa-solid fa-envelope"></i>
+<input type="email" id="txtEmail" name="email" placeholder="john@example.com">
+</div>
+
+</div>
+
+<div class="input-wrapper">
+
+<label>Mobile Number</label>
+
+<div class="field-box">
+<i class="fa-solid fa-phone"></i>
+<input type="text" id="txtMobile" name="mobile" placeholder="9876543210">
+</div>
+
+</div>
+
+<div class="input-wrapper">
+
+<label>Pass Category</label>
+
+<div class="field-box">
+<i class="fa-solid fa-id-card"></i>
+
+<select name="user_type_id" id="ddlUserType">
+
+<option value="Please Choose" selected>Select Category</option>
+
+{% for row in usertypelist %}
+<option value="{{ row[0] }}">{{ row[1] }}</option>
+{% endfor %}
+
+</select>
+
+</div>
+
+</div>
+
+<div class="input-wrapper span-full">
+
+<label>Address</label>
+
+<div class="field-box">
+<i class="fa-solid fa-location-dot"></i>
+<input type="text" id="txtAddress" name="address" placeholder="Street, City, Postal Code">
+</div>
+
+</div>
+
+<div class="input-wrapper span-full">
+
+<label>Password</label>
+
+<div class="field-box">
+<i class="fa-solid fa-lock"></i>
+<input type="password" id="txtPassword" name="password" placeholder="Password">
+</div>
+
+</div>
+
+</div>
+
+<button type="submit" class="submit-btn">
+Register Account
+</button>
+
+<p class="footer-link">
+Already have an account?
+<a href="/UserLogIn">Login Here</a>
+</p>
+
+</form>
+
+</section>
+
+</div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+:root {
+    --primary: #2563eb;
+    --navy: #0f172a;
+    --nav-height: 130px;
+}
+
+body {
+    background: #f8fafc;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ===============================
+   SCREEN LAYOUT (NO SCROLL)
+================================ */
+.content-wrapper {
+    margin-top: calc(var(--nav-height) + 20px);
+    padding-bottom: 40px;
+}
+
+/* Glassmorphism Verify Card */
+.glass-verify {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+}
+
+/* ===============================
+   PREMIUM VERTICAL PASS
+================================ */
+.pass-card {
+    width: 340px;
+    background: white;
+    border-radius: 35px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.12);
+    border: 1px solid #e2e8f0;
+    margin: auto;
+    position: relative;
+}
+
+/* Holographic Security Strip */
+.pass-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #2563eb, #7c3aed, #2563eb);
+    background-size: 200% 100%;
+    animation: holo 3s linear infinite;
+}
+
+@keyframes holo {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+.pass-header {
+    background: var(--navy);
+    padding: 25px 20px;
+    text-align: center;
+    color: white;
+}
+
+.pass-header h5 {
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.pass-body {
+    padding: 30px 25px;
+    text-align: center;
+}
+
+.photo-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.user-photo {
+    width: 130px;
+    height: 155px;
+    object-fit: cover;
+    border-radius: 25px;
+    border: 5px solid white;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10b981;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.expired-badge { background: #ef4444; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
+
+.user-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+.pass-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: #eff6ff;
+    padding: 4px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+.route-panel {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+}
+
+.route-panel small {
+    display: block;
+    font-size: 9px;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.route-panel strong {
+    font-size: 1rem;
+    color: var(--navy);
+    display: block;
+}
+
+.date-flex {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.date-box label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.date-box span {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--navy);
+}
+
+.pass-footer {
+    background: #f1f5f9;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pass-id {
+    font-family: monospace;
+    font-weight: 800;
+    color: #64748b;
+}
+
+/* ===============================
+   PRINT SETTINGS (FORMAL)
+================================ */
+@media print {
+    /* Hide everything except the pass card */
+    nav, .navbar, .glass-verify, .print-action-area, .bg-shape {
+        display: none !important;
+    }
+
+    body { background: white !important; margin: 0; padding: 0; }
+
+    .content-wrapper { margin-top: 0; padding: 0; }
+
+    .pass-card {
+        margin: 40px auto;
+        box-shadow: none;
+        border: 1px solid #ddd;
+        /* Force printing of background colors */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .pass-header { background: #0f172a !important; color: white !important; }
+}
+
+.print-action-area {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-download {
+    background: var(--navy);
+    color: white;
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    border: none;
+    transition: 0.3s;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+}
+
+.btn-download:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.3); color: white; }
+</style>
+</head>
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row g-4 justify-content-center align-items-center">
+
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="glass-verify">
+                    <h5 class="fw-800 mb-3">Identity Check</h5>
+                    <p class="small text-muted mb-4">Upload QR or Digital Pass to verify active status instantly.</p>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="file" name="qr_image" class="form-control form-control-sm mb-3" required>
+                        <button class="btn btn-primary btn-sm w-100 rounded-pill fw-bold py-2" type="submit">Verify Now</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                {% if buspasslist %}
+                <div class="pass-card">
+                    <div class="pass-header">
+                        <h5>Digital Smart Pass</h5>
+                    </div>
+
+                    <div class="pass-body">
+                        <div class="photo-container">
+                            <img src="{{ url_for('static', filename='Uploads/' + img_Path) }}" class="user-photo" alt="User">
+                            {% if status == "valid" %}
+                                <div class="status-badge">ACTIVE</div>
+                            {% else %}
+                                <div class="status-badge expired-badge">EXPIRED</div>
+                            {% endif %}
+                        </div>
+
+                        <h2 class="user-name text-uppercase">{{buspasslist[0][2]}}</h2>
+                        <span class="pass-label">{{buspasslist[0][1]}} Member</span>
+
+                        <div class="route-panel">
+                            <small>Authorized Route Path</small>
+                            <strong>{{applicatin_data[0][3]}} <i class="fa-solid fa-arrow-right-long mx-2 opacity-50"></i> {{applicatin_data[0][4]}}</strong>
+                        </div>
+
+                        <div class="date-flex">
+                            <div class="date-box text-start">
+                                <label>Issued Date</label>
+                                <span>{{buspasslist[0][6]}}</span>
+                            </div>
+                            <div class="date-box text-end">
+                                <label>Expiry Date</label>
+                                <span class="text-danger">{{buspasslist[0][7]}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pass-footer">
+                        <span class="pass-id">ID: #{{buspasslist[0][0]}}</span>
+                        <i class="fa-solid fa-qrcode fs-4 opacity-25"></i>
+                    </div>
+                </div>
+
+                <div class="print-action-area">
+                    <button class="btn-download" onclick="window.print()">
+                        <i class="fa-solid fa-print me-2"></i> Print / Download Pass
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

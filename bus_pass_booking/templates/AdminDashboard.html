@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Pass Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/scrollreveal"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <style>
+    body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #eef2f3, #dfe9f3);
+
+}
+
+        .dashboard-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 600;
+           margin-top:110px;
+            color: #333;
+        }
+
+        .dashboard-card {
+            border-radius: 18px;
+            padding: 30px 15px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: 0.4s;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+        }
+
+        .dashboard-card a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            font-size: 20px;
+            display: block;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .dashboard-card:hover a {
+            color: white;
+        }
+
+        .section-heading {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 50px 0 20px;
+            color: #444;
+            border-left: 5px solid #667eea;
+            padding-left: 10px;
+        }
+        .my-box{
+        box-shadow:10px 10px 10px black;
+        background-color:white;
+        margin:10px;
+        padding:20px;
+        border-radius:20px;
+        }
+    </style>
+</head>
+
+<body>
+ {% include 'Navbar.html' %}
+<div class="container">
+
+    <div class="dashboard-title">
+        🚍 Bus Pass Management Dashboard
+    </div>
+
+    <!-- ================= MASTER MODULES ================= -->
+    <div class="section-heading">Master Modules</div>
+    <div class="row g-4 my-box">
+
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/user_type">User Type</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/users">Users</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/routes">Routes</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/pass_type">Pass Type</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/pass_discounts">Pass Discounts</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/applications">Applications</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/document_types">Document Types</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/pass_type_required_documents">Pass Type Required Documents</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documentsMaster">Documents Master</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documentDetails">Document Details</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/payments">Payments</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/bus_pass">Bus Pass</a></div></div>
+
+    </div>
+
+    <!-- ================= LIST REPORTS ================= -->
+    <div class="section-heading">List Reports</div>
+    <div class="row g-4 my-box">
+
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/UserType_ListReports">UserType List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/Users_ListReport">Users List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/RoutesListReport">Routes List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/Pass_typeListReport">Pass Type List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/pass_discountsListReport">Pass Discounts List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/applicationListReport">Application List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/document_typeListReport">Document Type List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/pass_type_required_documentsListReport">Pass Type Required Documents List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documentMasterListReport">Document Master List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documentDetailsListReport">Document Details List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/paymentsListReport">Payments List Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/bus_passListReport">Bus Pass List Report</a></div></div>
+
+    </div>
+
+    <!-- ================= DYNAMIC REPORTS ================= -->
+<div class="section-heading">Dynamic Reports</div>
+    <div class="row g-4 my-box">
+
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/UserDynamicReport">User Dynamic Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/Bus_PassDynamicReport">Bus Pass Dynamic Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documents_MasterDynamicReport">Documents Master Dynamic Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documentDetailsDynamicReport">Document Details Dynamic Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/PaymentsDynamicReport">Payments Dynamic Report</a></div></div>
+
+    </div>
+
+    <!-- ================= DATE WISE REPORTS ================= -->
+ <div class="section-heading">Date Wise Reports</div>
+    <div class="row g-4 mb-5 my-box">
+
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/usersDateWiseReports">Users Date Wise Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/documentsMasterDateWiseReports">Documents Master Date Wise Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/paymentsDateWisereports">Payments Date Wise Report</a></div></div>
+        <div class="col-lg-3 col-md-4 col-sm-6"><div class="dashboard-card"><a href="/BusPassDateWisereports">Bus Pass Date Wise Report</a></div></div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

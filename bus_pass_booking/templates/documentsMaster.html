@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Documents Master</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ValidationLibrary.js') }}"></script>
+
+    <script>
+        function formValidator() {
+
+            var application = document.getElementById("ddlApplication");
+            var upload_date = document.getElementById("txtUploadDate");
+
+            if (madeSelection(application, "Please select Application ID") &&
+                notEmpty(upload_date, "Please select Upload Date")) {
+
+                return true;
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="mb-4">Documents Master</h2>
+
+<form method="POST" action="/documentsMaster" class="card p-4 shadow">
+
+    <div class="mb-3">
+        <label>Document ID</label>
+        <input type="text"
+               class="form-control w-25"
+               name="document_id"
+               value="{{ document_id }}"
+               readonly>
+    </div>
+
+    <!-- Application Dropdown -->
+    <div class="mb-3">
+        <label>Application ID</label>
+        <select name="application_id" id="ddlApplication" class="form-control w-50">
+            <option>Please Choose</option>
+            {% for row in applicationlist %}
+                <option value="{{ row[0] }}"
+                {% if row[0]|string == application_id|string %} selected {% endif %}>
+                    {{ row[0] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Uploaded Date -->
+    <div class="mb-3">
+        <label>Uploaded Date</label>
+        <input type="date"
+               name="uploaded_date"
+               id="txtUploadDate"
+               class="form-control w-50"
+               value="{{ uploaded_date }}">
+    </div>
+
+    <div class="mt-3">
+        <input type="submit" value="Insert" name="btn"
+               class="btn btn-primary"
+               onclick="return formValidator()"
+               {% if is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Update" name="btn"
+               class="btn btn-success"
+               onclick="return formValidator()"
+               {% if not is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Delete" name="btn"
+               class="btn btn-danger"
+               {% if not is_record %} disabled {% endif %}>
+    </div>
+</form>
+
+{% if documentlist %}
+<hr>
+
+<h4>Documents List</h4>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Document ID</th>
+            <th>Application ID</th>
+            <th>Uploaded Date</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in documentlist %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>
+                <a href="/documentsMaster?document_id={{ row[0] }}&application_id={{ row[1] }}&uploaded_date={{ row[2] }}"
+                   class="btn btn-outline-info btn-sm">
+                   Select
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+</body>
+</html>
+
+

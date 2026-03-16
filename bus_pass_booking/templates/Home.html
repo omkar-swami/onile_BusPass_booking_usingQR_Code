@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Bus Treval</title>
+    <style>
+header::before {
+  background-image: url("{{ url_for('static', filename='Img/bg1234.png') }}");
+}
+</style>
+
+  </head>
+  <body>
+ {% include 'Navbar.html' %}
+
+    <header id="home">
+      <div class="header__container" >
+        <div class="header__content">
+          <h1>SMART ONLINE BUS PASS PORTAL</h1>
+         <p>
+          Travel Smart with Monthly, Quarterly & Yearly Bus Pass Plans.
+          Apply online, track your status instantly.
+        </p>
+
+        </div>
+        <div class="header__image">
+          <img src="{{ url_for('static', filename='Img/bu2.png') }}" alt="header" />
+        </div>
+      </div>
+    </header>
+
+    <section class="section__container journey__container" id="tour">
+      <h2 class="section__header">Smart Bus Pass Booking Made Simple!</h2>
+      <p class="section__description">
+        Quick, Secure and Hassle-Free Online Bus Pass Services
+      </p>
+
+      <div class="journey__grid">
+        <div class="journey__card">
+          <div class="journey__card__bg">
+            <span><i class="ri-bookmark-3-line"></i></span>
+            <h4>Easy Online Application</h4>
+          </div>
+          <div class="journey__card__content">
+            <span><i class="ri-bookmark-3-line"></i></span>
+            <h4>Apply for Bus Pass in Minutes</h4>
+            <p>
+              Submit your bus pass application online in just a few simple
+              steps. Upload documents, select route, and choose pass duration —
+              all from the comfort of your home. No paperwork. No waiting in
+              long queues.
+            </p>
+          </div>
+        </div>
+
+        <div class="journey__card">
+          <div class="journey__card__bg">
+            <span><i class="ri-landscape-fill"></i></span>
+            <h4>Instant Approval & Tracking</h4>
+          </div>
+          <div class="journey__card__content">
+            <span><i class="ri-landscape-fill"></i></span>
+            <h4>Real-Time Status Updates</h4>
+            <p>
+              Track your bus pass approval status anytime. Get instant
+              notifications about verification, payment confirmation, and pass
+              generation. Stay updated at every step of the process.
+            </p>
+          </div>
+        </div>
+
+        <div class="journey__card">
+          <div class="journey__card__bg">
+            <span><i class="ri-map-2-line"></i></span>
+            <h4>Download pass & Travel Easily</h4>
+          </div>
+          <div class="journey__card__content">
+            <span><i class="ri-map-2-line"></i></span>
+            <h4>Download pass & Travel Easily</h4>
+            <p>
+              Make secure online payments and instantly download your digital
+              bus pass. Show your QR code or pass ID while boarding and enjoy a
+              smooth, contactless travel experience every day.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section__container showcase__container" id="package">
+      <div class="showcase__image">
+        <img src="{{ url_for('static', filename='Img/buspass.png') }}" alt="Bus Pass Booking" />
+      </div>
+
+      <div class="showcase__content">
+        <h4>Get Your Bus Pass Online — Fast, Secure & Convenient</h4>
+
+        <p>
+          Skip the long queues and apply for your bus pass from anywhere,
+          anytime. Our online bus pass booking system allows students,
+          employees, and daily commuters to submit applications, upload required
+          documents, and select routes with just a few clicks. Save time and
+          enjoy a smooth, digital process.
+        </p>
+
+        <p>
+          Track your application status in real-time, make secure online
+          payments, and instantly download your approved digital bus pass.
+          Designed for convenience and efficiency, our system ensures a
+          hassle-free experience so you can focus on your daily journey without
+          stress.
+        </p>
+      </div>
+    </section>
+
+    <section class="section__container discover__container">
+      <h2 class="section__header">Smart, Simple & Secure Bus Pass Services</h2>
+
+      <p class="section__description">
+        Apply, Track, and Travel with Ease — All in One Digital Platform
+      </p>
+
+      <div class="discover__grid">
+        <div class="discover__card">
+          <span><i class="ri-file-list-3-line"></i></span>
+          <h4>Easy Online Application</h4>
+          <p>
+            Apply for your bus pass in just a few simple steps. Fill in your
+            details, upload required documents, select your route, and submit
+            your application online. No paperwork, no long queues — everything
+            is fast and convenient.
+          </p>
+        </div>
+
+        <div class="discover__card">
+          <span><i class="ri-time-line"></i></span>
+          <h4>Real-Time Status Tracking</h4>
+          <p>
+            Stay updated with instant notifications and live application
+            tracking. Check approval status, payment confirmation, and pass
+            generation anytime. Transparency at every stage of your bus pass
+            journey.
+          </p>
+        </div>
+
+        <div class="discover__card">
+          <span><i class="ri-qr-code-line"></i></span>
+          <h4>Digital Pass with QR Verification</h4>
+          <p>
+            Once approved, download your digital bus pass with secure QR code
+            verification. Simply show your mobile pass while boarding and enjoy
+            smooth, contactless daily travel.
+          </p>
+        </div>
+      </div>
+    </section>
+
+   <footer id="contact">
+  <div class=" footer__container">
+
+    <!-- Logo & About -->
+    <div class="footer__col">
+      <div class="footer__logo">
+        <a href="#" class="logo">SmartBusPass</a>
+      </div>
+      <p>
+        Simplifying daily travel with our secure and digital bus pass
+        booking system. Apply online, track your application, make secure
+        payments, and download your QR-based bus pass — all in one place.
+      </p>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer__col">
+      <h4>Contact Us</h4>
+      <ul class="footer__links">
+        <li>
+          <a href="tel:+919876543210">
+            <span><i class="ri-phone-fill"></i></span>
+            +91 98765 43210
+          </a>
+        </li>
+        <li>
+          <a href="mailto:support@smartbuspass.com">
+            <span><i class="ri-mail-line"></i></span>
+            support@smartbuspass.com
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span><i class="ri-map-pin-2-fill"></i></span>
+            Maharashtra, India
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer__bar">
+    © 2026 SmartBusPass. All rights reserved.
+  </div>
+</footer>
+
+        <!-- Newsletter -->
+
+
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  </body>
+</html>

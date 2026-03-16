@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</head>
+<body>
+
+{% if buspasslist %}
+<hr>
+
+<h4>Bus Pass List</h4>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Pass ID</th>
+            <th>Pass Type </th>
+            <th>User Name</th>
+            <th>Base</th>
+            <th>Discount</th>
+            <th>Final</th>
+            <th>Issue</th>
+            <th>Expiry</th>
+            <th>Status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in buspasslist %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+</body>
+</html>

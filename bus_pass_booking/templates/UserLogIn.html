@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Login | Smart Bus Pass</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+/* Background */
+.Mybox{
+  min-height:90vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* Card */
+.Mycontainer{
+  width:100%;
+  max-width:1000px;
+  min-height:550px;
+  display:flex;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 25px 70px rgba(0,0,0,0.2);
+  background:white;
+  margin-top:100px;
+}
+
+/* Left Panel */
+.welcome-box{
+  flex:1;
+  background:linear-gradient(145deg,#004aad,#2563eb,#60a5fa);
+  color:white;
+  padding:80px 60px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  clip-path: polygon(0 0, 92% 0, 78% 100%, 0% 100%);
+}
+
+.welcome-box h1{
+  font-size:40px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.welcome-box p{
+  font-size:16px;
+  line-height:1.6;
+  opacity:0.95;
+  max-width:320px;
+}
+
+/* Login Section */
+.login-box{
+  flex:1;
+  padding:80px 70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.login-box h2{
+  font-size:30px;
+  color:#004aad;
+  margin-bottom:40px;
+}
+
+/* Input */
+.input-box{
+  position:relative;
+  margin-bottom:30px;
+}
+
+.input-box input{
+  width:100%;
+  padding:14px 45px 14px 15px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  outline:none;
+  font-size:14px;
+  transition:0.3s;
+}
+
+.input-box input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 10px rgba(37,99,235,0.2);
+}
+
+.input-box label{
+  position:absolute;
+  left:15px;
+  top:14px;
+  color:#6b7280;
+  transition:0.3s;
+  pointer-events:none;
+  background:white;
+  padding:0 5px;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label{
+  top:-8px;
+  font-size:12px;
+  color:#2563eb;
+}
+
+.input-box i{
+  position:absolute;
+  right:15px;
+  top:16px;
+  color:#2563eb;
+  cursor:pointer;
+}
+
+/* Button */
+.btn{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(90deg,#004aad,#2563eb);
+  border:none;
+  border-radius:30px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+  letter-spacing:1px;
+  font-weight:600;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 35px rgba(0,74,173,0.4);
+}
+
+/* Signup */
+.signup{
+  margin-top:20px;
+  font-size:14px;
+}
+
+.signup a{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.signup a:hover{
+  text-decoration:underline;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .Mycontainer{
+    flex-direction:column;
+  }
+
+  .welcome-box{
+    clip-path:none;
+    text-align:center;
+    padding:50px 30px;
+  }
+
+  .login-box{
+    padding:50px 30px;
+  }
+}
+
+@media(max-width:500px){
+  .welcome-box h1{
+    font-size:28px;
+  }
+
+  .login-box h2{
+    font-size:22px;
+  }
+}
+     #error-msg{
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 21px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+/* Show only if there is error text */
+#error-msg:not(:empty){
+  display: block;
+}
+</style>
+</head>
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="Mybox">
+<div class="Mycontainer">
+
+  <!-- LEFT SIDE -->
+  <div class="welcome-box">
+    <h1>User Login</h1>
+    <p>
+      Access your Smart Bus Pass account to manage applications,
+      renew passes, track status and download receipts easily.
+    </p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+    <form method="post" action="/UserLogIn">
+  <div class="login-box">
+    <h2>Login to Your Account</h2>
+
+    <div class="input-box">
+      <input type="text"  name="email" required>
+      <label>Username or Email</label>
+      <i class="fa fa-user"></i>
+    </div>
+
+    <div class="input-box">
+      <input type="password" id="password" name="password" required>
+      <label>Password</label>
+      <i class="fa fa-eye" id="togglePassword"></i>
+    </div>
+
+    <button class="btn">LOGIN</button>
+  <p id="error-msg">{{error}}</p>
+    <p class="signup">
+      Don’t have an account? <a href="/userRegistration">Sign Up</a>
+    </p>
+  </div>
+</form>
+</div>
+</div>
+
+<script>
+const togglePassword = document.getElementById("togglePassword");
+const password = document.getElementById("password");
+
+togglePassword.addEventListener("click", function () {
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+});
+</script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+</body>
+</html>

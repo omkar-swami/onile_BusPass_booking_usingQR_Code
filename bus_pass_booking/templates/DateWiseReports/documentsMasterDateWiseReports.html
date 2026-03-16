@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Date Wise Report</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,#eef2f3,#dfe9f3);
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 20px 20px 0 0;
+            padding: 15px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(78,115,223,0.4);
+            border-color: #4e73df;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg,#1cc88a,#4e73df);
+        }
+
+        table {
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #343a40;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= FILTER CARD ================= -->
+    <div class="card p-4 mb-5">
+        <div class="card-header text-center mb-4">
+            User Date Wise Report
+        </div>
+
+        <form action="/documentsMasterDateWiseReports" method="post">
+            <div class="row g-4 justify-content-center align-items-end">
+
+                <!-- From Date -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Select From Date</label>
+                    <input type="date" name="FDate" class="form-control shadow-sm" required>
+                </div>
+
+                <!-- To Date -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Select To Date</label>
+                    <input type="date" name="TDate" class="form-control shadow-sm" required>
+                </div>
+
+                <!-- Button -->
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-custom btn-lg shadow">
+                        Show Report
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- ================= REPORT TABLE ================= -->
+    {% if documentlist %}
+    <div class="card">
+        <div class="card-header text-center">
+            document Master List Report
+        </div>
+
+        <div class="table-responsive p-4">
+            <table class="table table-hover text-center align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>document ID</th>
+                        <th>Aplicant Name</th>
+                        <th>Uploaded Date</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in documentlist %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

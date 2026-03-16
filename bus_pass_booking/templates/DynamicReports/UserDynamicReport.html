@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dynamic Report</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,#eef2f3,#dfe9f3);
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 15px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .form-select {
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .form-select:focus {
+            box-shadow: 0 0 10px rgba(78,115,223,0.4);
+            border-color: #4e73df;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg,#4e73df,#1cc88a);
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg,#1cc88a,#4e73df);
+        }
+
+        table {
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: #343a40;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: 0.3s;
+        }
+
+        .badge-user {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .badge-admin {
+            background-color: #6f42c1;
+        }
+
+        .badge-customer {
+            background-color: #20c997;
+        }
+
+        .badge-guest {
+            background-color: #fd7e14;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= FILTER SECTION ================= -->
+    {% if usertypelist %}
+    <div class="card p-4 mb-5">
+        <div class="card-header text-center mb-4">
+            User Dynamic Report
+        </div>
+
+        <form method="post" action="/UserDynamicReport">
+            <div class="row justify-content-center align-items-end g-4">
+
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Select User Type
+                    </label>
+                    <select name="user_type_id" class="form-select shadow-sm">
+                        <option value="0">-- Select User Type --</option>
+                        {% for row in usertypelist %}
+                        <option value="{{row[0]}}">{{row[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-custom btn-lg text-white shadow">
+                        Show
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+
+    <!-- ================= TABLE SECTION ================= -->
+    {% if userlist %}
+    <div class="card">
+        <div class="card-header text-center">
+            User List
+        </div>
+
+        <div class="table-responsive p-4">
+            <table class="table table-hover align-middle text-center mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Address</th>
+                        <th>User Type</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in userlist %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[5] }}</td>
+
+                        <td>
+                            {% if row[6] == 'Admin' %}
+                                <span class="badge-user badge-admin">{{ row[6] }}</span>
+                            {% elif row[6] == 'Customer' %}
+                                <span class="badge-user badge-customer">{{ row[6] }}</span>
+                            {% else %}
+                                <span class="badge-user badge-guest">{{ row[6] }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ row[7] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

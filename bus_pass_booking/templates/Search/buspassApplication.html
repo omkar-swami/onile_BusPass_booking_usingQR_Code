@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bus Pass Checkout</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f1f5f9;
+font-family: 'Segoe UI', sans-serif;
+}
+
+/* MAIN WRAPPER */
+
+.main-wrapper{
+margin-top:120px;
+padding-bottom:80px;
+}
+
+/* STEPPER */
+
+.stepper{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-bottom:50px;
+}
+
+.step-node{
+width:45px;
+height:45px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+background:#e2e8f0;
+color:#64748b;
+transition:0.3s;
+}
+
+.step-node.active{
+background:#2563eb;
+color:white;
+transform:scale(1.1);
+}
+
+.step-node.completed{
+background:#10b981;
+color:white;
+}
+
+/* CARD */
+
+.form-card{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 35px rgba(0,0,0,0.06);
+}
+
+/* SUMMARY CARD */
+
+.summary-card{
+background:#0f172a;
+color:white;
+border-radius:20px;
+padding:30px;
+position:sticky;
+top:140px;
+}
+
+/* FORM */
+
+.form-label{
+font-weight:600;
+font-size:13px;
+color:#475569;
+}
+
+.form-control,.form-select{
+border-radius:12px;
+padding:12px;
+}
+
+/* UPLOAD BOX */
+
+.upload-box{
+border:2px dashed #cbd5e1;
+border-radius:15px;
+padding:25px;
+text-align:center;
+transition:0.3s;
+}
+
+.upload-box:hover{
+border-color:#2563eb;
+background:#eff6ff;
+}
+
+.upload-box.error{
+border-color:red;
+}
+
+/* BUTTON */
+
+.btn-main{
+background:#2563eb;
+color:white;
+padding:12px 30px;
+border-radius:30px;
+font-weight:600;
+}
+
+.btn-main:hover{
+background:#1d4ed8;
+color:white;
+}
+
+.step-section{
+display:none;
+}
+
+.step-section.active{
+display:block;
+animation:fade 0.5s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(15px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+</style>
+</head>
+
+<body>
+
+{% include 'Navbar.html' %}
+
+<div class="main-wrapper">
+
+<div class="container">
+
+<!-- STEPPER -->
+
+<div class="stepper">
+
+<div class="step-node active" id="node1">1</div>
+<div class="step-node" id="node2">2</div>
+<div class="step-node" id="node3">3</div>
+<div class="step-node" id="node4">4</div>
+
+</div>
+
+<form method="post" action="/buspassApplication" enctype="multipart/form-data">
+
+<input type="hidden" name="route_id" value="{{routeData[0][0]}}">
+<input type="hidden" name="pass_type_id" value="{{passinfo[0][0]}}">
+<input type="hidden" name="final_amount" value="{{final_amount}}">
+<input type="hidden" name="original_amount" value="{{original_price}}">
+<input type="hidden" name="discount_amount" value="{{discount_amount}}">
+<input type="hidden" name="expiryDate" id="expiryHidden">
+
+<div class="row g-5">
+
+<!-- LEFT FORM -->
+
+<div class="col-lg-8">
+
+<div class="form-card">
+
+<!-- STEP 1 -->
+
+<div class="step-section active" id="step1">
+
+<h4 class="mb-4">Route Details</h4>
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Source</label>
+<input class="form-control" value="{{routeData[0][1]}}" readonly>
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Destination</label>
+<input class="form-control" value="{{routeData[0][2]}}" readonly>
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Pass Validity</label>
+<input class="form-control" id="valid_days" value="{{passinfo[0][2]}} Days" readonly>
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Expiry Date</label>
+<input class="form-control" id="expiryDate" readonly>
+</div>
+
+</div>
+
+<div class="text-end mt-4">
+<button type="button" class="btn-main" onclick="goStep(2)">Next</button>
+</div>
+
+</div>
+
+<!-- STEP 2 -->
+
+<div class="step-section" id="step2">
+
+<h4 class="mb-4">User Details</h4>
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<label class="form-label">Full Name</label>
+<input class="form-control" value="{{userData[0][1]}}" readonly>
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Email</label>
+<input class="form-control" value="{{userData[0][3]}}" readonly>
+</div>
+
+<div class="col-12">
+<label class="form-label">Address</label>
+<input class="form-control" value="{{userData[0][5]}}" readonly>
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+
+<button type="button" class="btn btn-secondary" onclick="goStep(1)">Back</button>
+
+<button type="button" class="btn-main" onclick="goStep(3)">Next</button>
+
+</div>
+
+</div>
+
+<!-- STEP 3 -->
+
+<div class="step-section" id="step3">
+
+<h4 class="mb-4">Upload Documents</h4>
+
+<div class="row g-4">
+
+{% for row in reqdocuments %}
+
+<div class="col-md-6">
+
+<div class="upload-box">
+
+<i class="fa fa-file-upload fs-3 mb-2 text-primary"></i>
+
+<label class="form-label d-block">{{row[2]}}</label>
+
+<input type="hidden" name="doc_type_id[]" value="{{row[1]}}">
+
+<input type="file" class="form-control validate-file" name="documents[]" required>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+
+<button type="button" class="btn btn-secondary" onclick="goStep(2)">Back</button>
+
+<button type="button" class="btn-main" onclick="validateDocuments()">Next</button>
+
+</div>
+
+</div>
+
+<!-- STEP 4 -->
+
+<div class="step-section" id="step4">
+
+<h4 class="mb-4">Payment</h4>
+
+<div class="row g-3">
+
+<div class="col-md-6">
+
+<label class="form-label">Payment Method</label>
+
+<select class="form-select" id="payMethod" onchange="togglePay()">
+
+<option value="UPI">UPI</option>
+<option value="Card">Card</option>
+<option value="Cash">Cash</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6" id="upiDiv">
+
+<label class="form-label">UPI ID</label>
+
+<input class="form-control" placeholder="example@upi">
+
+</div>
+
+<div class="col-md-12 d-none" id="cardDiv">
+
+<label class="form-label">Card Number</label>
+
+<input class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+
+<button type="button" class="btn btn-secondary" onclick="goStep(3)">Back</button>
+
+<button type="submit" class="btn btn-success">Complete Payment</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SUMMARY -->
+
+<div class="col-lg-4">
+
+<div class="summary-card">
+
+<h5 class="mb-4">Order Summary</h5>
+
+<div class="d-flex justify-content-between">
+<span>Fare</span>
+<span>₹{{original_price|int}}</span>
+</div>
+
+<div class="d-flex justify-content-between">
+<span>Discount</span>
+<span class="text-success">-₹{{discount_amount|int}}</span>
+</div>
+
+<hr>
+
+<div class="d-flex justify-content-between">
+<b>Total</b>
+<b class="text-info fs-4">₹{{final_amount|int}}</b>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+function goStep(n){
+
+document.querySelectorAll(".step-section").forEach(s=>s.classList.remove("active"))
+
+document.getElementById("step"+n).classList.add("active")
+
+document.querySelectorAll(".step-node").forEach((node,i)=>{
+
+node.classList.remove("active","completed")
+
+if(i+1<n) node.classList.add("completed")
+
+if(i+1==n) node.classList.add("active")
+
+})
+
+window.scrollTo({top:120,behavior:'smooth'})
+
+}
+
+function togglePay(){
+
+let method=document.getElementById("payMethod").value
+
+document.getElementById("upiDiv").classList.toggle("d-none",method!=="UPI")
+
+document.getElementById("cardDiv").classList.toggle("d-none",method!=="Card")
+
+}
+
+function validateDocuments(){
+
+let files=document.querySelectorAll(".validate-file")
+let valid=true
+
+files.forEach(file=>{
+
+let box=file.closest(".upload-box")
+
+if(file.files.length===0){
+
+box.classList.add("error")
+valid=false
+
+}else{
+
+box.classList.remove("error")
+
+}
+
+})
+
+if(!valid){
+
+alert("Please upload all required documents before continuing.")
+
+return
+
+}
+
+goStep(4)
+
+}
+
+const days=parseInt("{{passinfo[0][2]}}")||30
+
+let exp=new Date()
+
+exp.setDate(exp.getDate()+days)
+
+document.getElementById("expiryDate").value=exp.toDateString()
+
+document.getElementById("expiryHidden").value=exp.toISOString().split('T')[0]
+
+</script>
+
+</body>
+</html>

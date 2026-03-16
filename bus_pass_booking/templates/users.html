@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ValidationLibrary.js') }}"></script>
+
+    <script>
+        function formValidator() {
+
+            var full_name = document.getElementById("txtFullName");
+            var email = document.getElementById("txtEmail");
+            var mobile = document.getElementById("txtMobile");
+            var password = document.getElementById("txtPassword");
+            var address = document.getElementById("txtAddress");
+            var user_type = document.getElementById("ddlUserType");
+
+            if (notEmpty(full_name, "Full Name required") &&
+                isAlphabet(full_name, "Only letters allowed") &&
+                notEmpty(email, "Email required") &&
+                emailValidator(email, "Invalid Email") &&
+                notEmpty(mobile, "Mobile required") &&
+                isNumeric(mobile, "Only numbers allowed") &&
+                validmobile(mobile) &&
+                notEmpty(password, "Password required") &&
+                isValidPassword(password, "Password must contain 8 characters, uppercase, lowercase, number & special char") &&
+                notEmpty(address, "Address required") &&
+                isAlphanumeric(address, "Address must be alphanumeric") &&
+                madeSelection(user_type, "Please select user type")) {
+
+                return true;
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="mb-4">User Management</h2>
+
+<form method="POST" action="/users" class="card p-4 shadow">
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label>User ID</label>
+            <input type="text" name="user_id"
+                   class="form-control"
+                   value="{{ user_id }}" readonly>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label>Created Date</label>
+            <input type="date" name="created_at"
+                   class="form-control"
+                   value="{{ created_at }}">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input type="text" name="full_name"
+               id="txtFullName"
+               class="form-control"
+               value="{{ full_name }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input type="text" name="email"
+               id="txtEmail"
+               class="form-control"
+               value="{{ email }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Mobile</label>
+        <input type="text" name="mobile"
+               id="txtMobile"
+               class="form-control"
+               value="{{ mobile }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password"
+               id="txtPassword"
+               class="form-control"
+               value="{{ password }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Address</label>
+        <input type="text" name="address"
+               id="txtAddress"
+               class="form-control"
+               value="{{ address }}">
+    </div>
+
+    <div class="mb-3">
+        <label>User Type</label>
+        <select name="user_type_id"
+                id="ddlUserType"
+                class="form-select">
+            <option value="Please Choose">Please Choose</option>
+            {% for row in usertypelist %}
+                <option value="{{ row[0] }}"
+                    {% if row[0]|string == user_type_id|string %} selected {% endif %}>
+                    {{ row[1] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mt-3">
+        <input type="submit" value="Insert"
+               name="btn"
+               class="btn btn-primary"
+               onclick="return formValidator()"
+               {% if is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Update"
+               name="btn"
+               class="btn btn-success"
+               onclick="return formValidator()"
+               {% if not is_record %} disabled {% endif %}>
+
+        <input type="submit" value="Delete"
+               name="btn"
+               class="btn btn-danger"
+               {% if not is_record %} disabled {% endif %}>
+    </div>
+</form>
+
+{% if userlist %}
+<hr>
+<h4>User List</h4>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>User_type_id</th>
+            <th>Date</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in userlist %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>
+                <a href="/users?user_id={{ row[0] }}&full_name={{ row[1] }}&email={{ row[2] }}&mobile={{ row[3] }}&password={{ row[4] }}&address={{ row[5] }}&user_type_id={{ row[6] }}&created_at={{ row[7] }}"
+                   class="btn btn-outline-info btn-sm">
+                    Select
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+</body>
+</html>
